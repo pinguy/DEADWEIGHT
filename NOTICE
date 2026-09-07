@@ -1,0 +1,19 @@
+DEADWEIGHT / SHIFT 01
+
+Built from the workflow and ideas in C Optimizer by Antoni Norman / Pingu.
+https://github.com/pinguy1982
+
+Adapted material: ECHOHULL's bitmap font, axis-separated wall collision and
+dynamic SDL loading approach. nervk informed the first-person loop and
+procedural game audio; VOIDRUNNER informed the layered musical approach.
+
+Original example material: Copyright 2026 Antoni Norman, Apache-2.0.
+The new magnetic salvage mechanics, software raycaster, stereo composition,
+interface and executable input/capture harness were created for this handover.
+The game source is distributed under Apache-2.0; see LICENSE.
+
+The bundled, unmodified C Optimizer build script, entry point and Python
+packing tools remain MIT licensed: Copyright (c) 2026 Pinguy.
+See toolkit/LICENSE. Original example game sources are not redistributed here.
+
+No external textures, music, fonts or other runtime asset files are required.
