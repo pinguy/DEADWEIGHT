@@ -1,0 +1,73 @@
+{
+  "method": "Matched input, 640x360, SDL software renderer; timed after setup",
+  "frames_per_scene": 240,
+  "scenes": {
+    "room": {
+      "before": {
+        "seconds": 3.5877766349995,
+        "fps": 66.89379646958804,
+        "end_state": 1
+      },
+      "after": {
+        "seconds": 0.9931968539995069,
+        "fps": 241.64393899713176,
+        "end_state": 1
+      },
+      "speedup": 3.612351993013141
+    },
+    "carrying_core": {
+      "before": {
+        "seconds": 4.263060704000054,
+        "fps": 56.29757975878848,
+        "end_state": 1
+      },
+      "after": {
+        "seconds": 0.9984087180000643,
+        "fps": 240.38251637140107,
+        "end_state": 1
+      },
+      "speedup": 4.269855247798207
+    },
+    "at_wall": {
+      "before": {
+        "seconds": 4.45589740899959,
+        "fps": 53.861204146054,
+        "end_state": 1
+      },
+      "after": {
+        "seconds": 0.5502438490002532,
+        "fps": 436.170255126086,
+        "end_state": 1
+      },
+      "speedup": 8.098041290412569
+    }
+  },
+  "realtime": [
+    {
+      "wall_seconds": 4.0052,
+      "rendered_frames": 241,
+      "fps": 60.17,
+      "simulation_steps": 241,
+      "simulation_seconds": 4.0167,
+      "mission_seconds": 4.0157,
+      "audio_seconds": 4.15,
+      "audio_queue_empty_events": 0,
+      "renderer": "software",
+      "video_driver": "dummy",
+      "frame_delay_ms": 0
+    },
+    {
+      "wall_seconds": 4.0266,
+      "rendered_frames": 88,
+      "fps": 21.85,
+      "simulation_steps": 239,
+      "simulation_seconds": 3.9833,
+      "mission_seconds": 3.9824,
+      "audio_seconds": 4.1167,
+      "audio_queue_empty_events": 0,
+      "renderer": "software",
+      "video_driver": "dummy",
+      "frame_delay_ms": 40
+    }
+  ]
+}

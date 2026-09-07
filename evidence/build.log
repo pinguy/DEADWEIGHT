@@ -1,0 +1,11 @@
+[build] start:    syscall _start
+[build] cc:       gcc
+[build] source:   /workspace/scratch/ae5b2d06736c/deadweight/DEADWEIGHT.c
+[build] output:   /workspace/scratch/ae5b2d06736c/deadweight/deadweight
+[build] strip:    29.9 KiB (30,656 bytes, 245,248 bits)
+[build] sstrip:   28.7 KiB (29,424 bytes, 235,392 bits)
+[build] bcj/lzma:14.6 KiB (14,984 bytes, 119,872 bits) (raw x86+lzma lc=2 pb=0 dict=64KiB)
+[build] runner:   14.8 KiB (15,132 bytes, 121,056 bits)
+[build] DT_NEEDED:
+ 0x0000000000000001 (NEEDED)             Shared library: [libm.so.6]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]

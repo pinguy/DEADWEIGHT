@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "duration": 35.95,
+  "decoded_video_frames": 717,
+  "video_codec": "h264",
+  "pixel_format": "yuv420p",
+  "audio_codec": "aac",
+  "channels": 2,
+  "faststart": true,
+  "top_level_atoms": [
+    "ftyp",
+    "moov",
+    "free",
+    "mdat"
+  ],
+  "rejected_original_broken_file": true
+}

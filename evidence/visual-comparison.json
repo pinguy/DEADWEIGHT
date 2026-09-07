@@ -1,0 +1,18 @@
+{
+  "title": {
+    "mean_absolute_rgb_difference": 0.060499131944444444,
+    "fraction_pixels_over_10_levels": 3.0381944444444444e-05
+  },
+  "carrying_core": {
+    "mean_absolute_rgb_difference": 0.1359056712962963,
+    "fraction_pixels_over_10_levels": 3.90625e-05
+  },
+  "wall_collision": {
+    "mean_absolute_rgb_difference": 0.06338541666666667,
+    "fraction_pixels_over_10_levels": 0.0
+  },
+  "win": {
+    "mean_absolute_rgb_difference": 0.18740596064814816,
+    "fraction_pixels_over_10_levels": 0.0
+  }
+}

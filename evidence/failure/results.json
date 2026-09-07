@@ -1,0 +1,95 @@
+{
+  "passed": true,
+  "binary": "/workspace/scratch/ae5b2d06736c/deadweight/deadweight",
+  "seed": 123,
+  "method": "SDL_PushEvent keyboard and mouse; real event loop, physics, SDL software renderer and PCM audio",
+  "checks": [
+    "Mute toggles both ways",
+    "Live enemy contact reduces hull and causes death",
+    "Death screen restart restores a fresh run",
+    "The 180-second station timer causes death even with hull remaining",
+    "Escape exits from the death screen"
+  ],
+  "final": {
+    "frame": 12295,
+    "state": 3,
+    "x": 8.4959,
+    "y": 2.60092,
+    "yaw": -1.534796,
+    "hp": 82.0,
+    "time": -0.0002,
+    "held": -1,
+    "cores": 0,
+    "kills": 1,
+    "pulls": 1,
+    "throws": 1,
+    "bumps": 0,
+    "muted": 0,
+    "running": 0,
+    "cargo": [
+      [
+        3.5,
+        3.5,
+        1
+      ],
+      [
+        14.5,
+        3.5,
+        1
+      ],
+      [
+        14.5,
+        10.5,
+        1
+      ],
+      [
+        3.5,
+        7.5,
+        1
+      ],
+      [
+        8.2646,
+        11.0804,
+        1
+      ],
+      [
+        13.5,
+        8.5,
+        1
+      ],
+      [
+        8.5,
+        2.5,
+        1
+      ],
+      [
+        3.5,
+        11.8,
+        1
+      ],
+      [
+        14.5,
+        5.5,
+        1
+      ]
+    ],
+    "drones": [
+      [
+        4.6197,
+        6.0998,
+        2.0
+      ],
+      [
+        14.0358,
+        6.4025,
+        2.0
+      ],
+      [
+        9.8169,
+        11.4024,
+        -1.14
+      ]
+    ]
+  },
+  "wall_seconds": 4.75
+}

@@ -1,67 +1,83 @@
-# DEADWEIGHT — end-to-end handover
+# DEADWEIGHT — performance update and E2E evidence
 
-Tested 7 September 2026, in the hosted Ubuntu 24.04 environment.
+The game had avoidable CPU costs and a timing bug. This update caches wall
+materials and fixed effects, skips floor/ceiling pixels hidden by walls, uses
+integer blending, clips sprite loops, and computes core rotation once per
+frame. It retains the 640×360 framebuffer.
 
-**Both end-to-end suites passed on the delivered packed executable.**
-The recorded controller completed the contract in 30.38 seconds of
-mission time, banked all three cores, destroyed all three drones with thrown
-plates, and finished with 100 hull. The recording is an automated
-playthrough; this is not a claim about difficulty for a first-time player.
+Desktop presentation now asks SDL for acceleration and falls back to software.
+The raycaster itself still runs on the CPU. Simulation catches up in fixed
+steps when drawing is slow; audio is filled according to device consumption.
+The soundtrack and game rules are unchanged.
 
-| Check | Result |
-| --- | --- |
-| Title → Enter → playable room | Passed |
-| Pause freezes movement and mission time; resume | Passed |
-| Pull, hold, drop and re-grab scrap | Passed |
-| Thrown objects hit and destroy drones | Passed for all three drones |
-| Wall collision | Player stopped at the bulkhead; 48 blocked movement steps |
-| Collect and deliver all three cores | Passed |
-| Victory screen and frozen terminal timer | Passed; screenshot inspected |
-| Restart after victory | Fresh health, cargo, drones and score |
-| Enemy contact damage → death | Passed |
-| Restart after death | Passed |
-| Station timeout | Death at 180 seconds, with 82 hull still remaining |
-| Escape from results | Clean exit |
-| Mute / unmute | Actual recorded PCM became exactly silent, then audible again |
-| Sound recording | 48 kHz stereo; peak 0.705; zero clipped samples |
-| Rendering performance | 116 FPS over 301 uncapped frames on this hosted CPU |
+## Matched host performance
 
-## Evidence
+These are uncapped SDL software-renderer measurements on the same hosted
+machine, after identical input-based scene setup, with 240 timed frames each.
+They are not measurements from the user's workstation. The benchmarked renderer
+and timing code are the release implementation; the final follow-up only
+separated death and timeout capture filenames.
 
-- `evidence/victory/playthrough.mp4`: 35.95-second capture with stereo sound.
-- `evidence/victory/`: title, magnetic hold, cargo, combat and victory captures;
-  the complete input command stream, read-only telemetry and assertion results.
-- `evidence/failure/`: damage death, timeout captures, inputs, trace and results.
-- `evidence/audio-check.json`, `mute-check.json`, `performance.json`:
-  measured audio and renderer checks.
-- `tests/e2e.py`: the controller and assertions used for these runs.
+| Scene | Packed FPS before → after | Gain | Native FPS before → after | Gain |
+| --- | ---: | ---: | ---: | ---: |
+| Room | 67 → 242 | 3.6× | 110 → 311 | 2.8× |
+| Carrying a core | 56 → 240 | 4.3× | 89 → 302 | 3.4× |
+| Facing a bulkhead | 54 → 436 | 8.1× | 94 → 619 | 6.6× |
 
-The source was also rebuilt after formatting cleanup. Both executable hashes
-were byte-identical to the versions already exercised. Both builds compile
-without warnings under their supplied build commands.
+With an artificial 40 ms drawing delay, the normal packed runtime drew about
+22 frames per second while advancing simulation at 60 steps per second.
+Four seconds of wall time produced approximately four seconds of mission time;
+no empty software audio queue was observed. This checks the actual real-time
+loop, separately from the deterministic replay mode.
 
-| Delivered binary | Bytes | SHA-256 |
-| --- | ---: | --- |
-| `deadweight` — C Optimizer packed runner | 13762 | `e990b248713753257a203318b7c7017fc8e3d7d05ec96a0a39e892775e231c64` |
-| `deadweight-native` — regular executable | 53320 | `5cafe8acf4eb8f82ca3989080aece576276a63c0dc73623b662b1bde8a77b1ff` |
+## End-to-end checks
 
-The byte counts exclude shared system libraries. Both binaries use SDL2, libc
-and libm at runtime. The C Optimizer runner also uses the system shell and xz.
+The release packed executable passed the full victory suite: title/start,
+pause/resume, pull/drop/re-grab, projectile hits, all three drone kills,
+collision, all three deliveries, victory and restart. The failure suite passed
+mute controls, contact damage/death, restart, station timeout with hull left,
+and a clean exit. Death and timeout now have distinct screenshots; the test
+rejects an accidental overwrite.
 
-## What this verifies
+The same complete replay produced byte-identical 48 kHz stereo PCM and the
+same final game state as the original release. Captured PCM has no clipped
+samples. A carried-core image was inspected after optimization; measured
+mean RGB differences across selected images were below 0.2 of 255 levels.
 
-The controller operates the actual executable through SDL keyboard and mouse
-events. Physics, enemy damage, delivery rules and rendering are the game's
-normal implementations. Fixed simulation timing makes the checks reproducible;
-telemetry lets the controller choose its next input. There are no forced wins,
-teleports, invulnerability switches or alternate collision rules.
+## Reproduce and inspect
 
-Screenshots and video were read from the SDL software renderer. Title,
-gameplay, carried cargo, victory, timeout, and a decoded video frame were
-visually inspected. Audio measurements verify signal, stereo content, mute
-and clipping; listening quality remains a subjective judgment.
+Run `sh run.sh --benchmark 5` for a short check on the actual desktop.
+Run `python3 tests/performance.py ./deadweight-native --out performance.json`
+for the scene and slow-frame checks. The optional `--baseline` argument compares
+an older executable on the same host.
 
-The display and sound drivers in the tests were SDL's headless/dummy drivers.
-These checks do not establish physical keyboard/mouse capture, speakers,
-fullscreen behavior or desktop compatibility on the user's CachyOS box. The
-regular desktop launch is provided for that final local check.
+`evidence/victory` and `evidence/failure` contain release inputs, telemetry,
+assertion results and captures. The victory folder includes the updated video.
+`evidence/performance-packed.json` and `performance-native.json` contain full
+measurements; `regression.json` and `audio-check.json` contain the audio/state
+checks. `SHA256SUMS` identifies the packaged files.
+
+Tests here use SDL's dummy display/audio drivers. GPU presentation, physical
+input, fullscreen and speakers on the user's machine still need a local run.
+An empty SDL queue counter is software telemetry, not a microphone measurement.
+
+## Release files
+
+- `deadweight`: 15,132 bytes; SHA-256 `3e46b73a8ae5d60fbeb32a6def3f9f5c7d8a3c025cde3fd1fe94e06969b217e1`.
+- `deadweight-native`: 58,144 bytes; SHA-256 `7396fa909d0a2a6b68659ce656f4b1e2a7b7afe498172bb88cbb2b22518cdd0f`.
+
+Shared system libraries are excluded from these executable sizes.
+
+## Video export correction
+
+The performance-update MP4 was incomplete: it lacked the container's `moov`
+index. It was rebuilt from the intact video capture and PCM audio. The repaired
+file has its index before the media data, and all 717 video frames plus its AAC
+audio decode successfully. Its duration is 35.95 seconds. The decoded ending
+was visually checked against the victory state.
+
+The exporter now writes a temporary file, flushes it, checks duration/stream
+metadata and frame count, and decodes both complete streams before publishing
+the final filename. This verifier was checked against the actual broken file
+and correctly rejected it. `evidence/victory/video-check.json` records the
+repair validation. Game source and executables are unchanged by this fix.

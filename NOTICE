@@ -1,7 +1,11 @@
 DEADWEIGHT / SHIFT 01
 
+Game implementation, procedural score and test harness created by OpenAI
+Codex for Antoni "Pingu" Norman, who supplied the toolkit and examples,
+set the challenge, play-tested the game and reported performance feedback.
+
 Built from the workflow and ideas in C Optimizer by Antoni Norman / Pingu.
-https://github.com/pinguy1982
+https://github.com/pinguy/c_optimizer
 
 Adapted material: ECHOHULL's bitmap font, axis-separated wall collision and
 dynamic SDL loading approach. nervk informed the first-person loop and
@@ -17,3 +21,7 @@ packing tools remain MIT licensed: Copyright (c) 2026 Pinguy.
 See toolkit/LICENSE. Original example game sources are not redistributed here.
 
 No external textures, music, fonts or other runtime asset files are required.
+
+Performance update: wall/effect caches, visibility-based floor shading,
+integer colour blending, clipped sprites, accelerated SDL presentation with
+software fallback, independent audio queue filling and real-time simulation.
